@@ -8,13 +8,10 @@ using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 
 public static string AAD_TENANTID       = Environment.GetEnvironmentVariable("AAD_TENANTID");
-public static string ENVIRONMENT_NAME   = Environment.GetEnvironmentVariable("ENVIRONMENT_NAME");
 public static string CLIENT_ID          = Environment.GetEnvironmentVariable("CLIENT_ID");
 public static string CLIENT_SECRET      = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-public static string ADMIN_USERNAME     = Environment.GetEnvironmentVariable("ADMIN_USERNAME");
-public static string ADMIN_PASSWORD     = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
-public static string AUTHCODE_URI       = Environment.GetEnvironmentVariable("AUTHCODE_URI");
-public static string EVENT_URI          = Environment.GetEnvironmentVariable("EVENT_URI"); 
+public static string BASE_URI           = Environment.GetEnvironmentVariable("AUTHCODE_URI");
+public static string COMPANY_ID         = Environment.GetEnvironmentVariable("COMPANY_ID");
 
 public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 {
