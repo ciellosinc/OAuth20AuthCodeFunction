@@ -108,7 +108,7 @@ public static async Task<string> GetBearerTokenAsync()
     {
         { "grant_type", "client_credentials" },
         { "client_id", CLIENT_ID },
-        { "client_secret", CLIENT_SECERT },
+        { "client_secret", CLIENT_SECRET },
         { "scope", "https://api.businesscentral.dynamics.com/.default" }
     };
     var grantContent = new FormUrlEncodedContent(grantValues); 
