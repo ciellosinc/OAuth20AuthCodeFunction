@@ -2,14 +2,8 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "ENVIRONMENT_NAME": {
-      "value": "Sandbox"
-    },
-    "ADMIN_USERNAME": {
-      "value": "admin@SquareIncDev.onmicrosoft.com"
-    },
-    "ADMIN_PASSWORD": {
-      "value": "=E0?a(Z[2"
+    "AAD_TENANTID": {
+      "value": "46e85934-1fab-4533-a4ad-de92ce1fd81a"
     },
     "CLIENT_ID": {
       "value": "8eec7c83-835f-48eb-b34b-827bf9b6e852"
@@ -17,14 +11,14 @@
     "CLIENT_SECRET": {
       "value": "RtHgr17C-0fIy~Xrq4G5HyF_T4DheP~nI~"
     },
-    "AUTHCODE_URI": {
-      "value": "ODataV4/SquareOAuthService_GetAuthorizationCode?company=e93b67c5-78f1-ea11-bb43-000d3a2e8412"
+    "BASE_URI": {
+      "value": "https://api.businesscentral.dynamics.com/v2.0/46e85934-1fab-4533-a4ad-de92ce1fd81a/Sandbox/ODataV4"
     },
-    "EVENT_URI": {
-      "value": "ODataV4/SquareOAuthService_GetAuthorizationCode?company=e93b67c5-78f1-ea11-bb43-000d3a2e8412"
+    "COMPANY_ID": {
+      "value": "e93b67c5-78f1-ea11-bb43-000d3a2e8412"
     },
     "repoURL": {
-      "value": "https://github.com/ciellos-dev/OAuthCodeFunction.git"
+      "value": "https://github.com/ciellosinc/OAuth20AuthCodeFunction.git"
     },
     "storageAccountType": {
       "value": "Standard_LRS"
