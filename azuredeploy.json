@@ -9,53 +9,39 @@
         "description": "The name of the function app that you wish to create."
       }
     },
-    "ENVIRONMENT_NAME": {
+    "AAD_TENANTID": {
       "type": "string",
-      "defaultValue": "Sandbox",
+      "defaultValue": "46e85934-1fab-4533-a4ad-de92ce1fd81a",
       "metadata": {
         "description": "The Name of the BC environment"
-      }
-    },
-    "ADMIN_USERNAME": {
-      "type": "string",
-      "defaultValue": "admin@microsoft.com",
-      "metadata": {
-        "description": "The Admin username"
-      }
-    },
-    "ADMIN_PASSWORD": {
-      "type": "SecureString",
-      "defaultValue": "BpvF4pggjOMU7NjMPYfpHM8wn9ideRN4YZWZzPvT7lJeTLQhDzzGg==",
-      "metadata": {
-        "description": "The Admin user password"
       }
     },
     "CLIENT_ID": {
       "type": "string",
       "defaultValue": "e93b67c5-88f1-ea11-bb43-000d3a2e8415",
       "metadata": {
-        "description": "The ClientID from AzureAD"
+        "description": "The Client ID from AzureAD"
       }
     },
     "CLIENT_SECRET": {
       "type": "SecureString",
       "defaultValue": "BpvF4pggjOMU7NjMPYfpHM8wn9ideRN4YZWZzPvT7lJeTLQhDzzGg==",
       "metadata": {
-        "description": "The Name of the BC environment"
+        "description": "The Client Secert from AzureAD"
       }
     },
-    "AUTHCODE_URI": {
+    "BASE_URI": {
       "type": "string",
-      "defaultValue": "ODataV4/SquareOAuthService_GetAuthorizationCode?company=e93b67c5-88f1-ea11-bb43-000d3a2e8415",
+      "defaultValue": "https://api.businesscentral.dynamics.com/v2.0/46e85934-1fab-4533-a4ad-de92ce1fd81a/Sandbox/ODataV4",
       "metadata": {
-        "description": "The Name of the BC environment"
+        "description": "The Base URI of the BC environment"
       }
     },
-    "EVENT_URI": {
+    "COMPANY_ID": {
       "type": "string",
-      "defaultValue": "ODataV4/SquareOAuthService_GetAuthorizationCode?company=e93b67c5-88f1-ea11-bb43-000d3a2e8415",
+      "defaultValue": "e93b67c5-88f1-ea11-bb43-000d3a2e8415",
       "metadata": {
-        "description": "The Name of the BC environment"
+        "description": "The Company ID in the BC environment"
       }
     },
     "skuName": {
@@ -87,7 +73,7 @@
     },
     "repoURL": {
       "type": "string",
-      "defaultValue": "https://github.com/ciellos-dev/OAuthCodeFunction.git",
+      "defaultValue": "https://github.com/ciellosinc/OAuth20AuthCodeFunction.git",
       "metadata": {
         "description": "The URL for the GitHub repository that contains the project to deploy."
       }
@@ -161,21 +147,6 @@
               "slotSetting": false
             },
             {
-              "name": "ADMIN_PASSWORD",
-              "value": "[parameters('ADMIN_PASSWORD')]",
-              "slotSetting": false
-            },
-            {
-              "name": "ADMIN_USERNAME",
-              "value": "[parameters('ADMIN_USERNAME')]",
-              "slotSetting": false
-            },
-            {
-              "name": "AUTHCODE_URI",
-              "value": "[parameters('AUTHCODE_URI')]",
-              "slotSetting": false
-            },
-            {
               "name": "CLIENT_ID",
               "value": "[parameters('CLIENT_ID')]",
               "slotSetting": false
@@ -186,13 +157,13 @@
               "slotSetting": false
             },
             {
-              "name": "ENVIRONMENT_NAME",
-              "value": "[parameters('ENVIRONMENT_NAME')]",
+              "name": "BASE_URI",
+              "value": "[parameters('BASE_URI')]",
               "slotSetting": false
             },
             {
-              "name": "EVENT_URI",
-              "value": "[parameters('EVENT_URI')]",
+              "name": "COMPANY_ID",
+              "value": "[parameters('COMPANY_ID')]",
               "slotSetting": false
             },
             {
