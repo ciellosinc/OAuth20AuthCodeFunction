@@ -82,7 +82,7 @@ public static async Task<string> PostEventToBCAsync(string jsonBody, ILogger log
     HttpClient client = new HttpClient(); 
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {await GetBearerTokenAsync()}");
     var data = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-    string postUri = $"{BASE_URI}/SquareOAuthService_GetSquareWebhookRequest?company={COMPANY_ID}/";
+    string postUri = $"{BASE_URI}/SquareOAuthService_GetSquareWebhookRequest?company={COMPANY_ID}";
     log.LogInformation(postUri);
     log.LogInformation(jsonBody);
     var response = await client.PostAsync(postUri, data);
@@ -94,7 +94,7 @@ public static async Task<string> PostAuthCodeToBCAsync(string jsonBody, ILogger 
     HttpClient client = new HttpClient(); 
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {await GetBearerTokenAsync()}");
     var data = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-    string postUri = $"{BASE_URI}/SquareOAuthService_GetAuthorizationCode?company={COMPANY_ID}/";
+    string postUri = $"{BASE_URI}/SquareOAuthService_GetAuthorizationCode?company={COMPANY_ID}";
     log.LogInformation(postUri);
     log.LogInformation(data.ReadAsStringAsync().Result);
     var response = await client.PostAsync(postUri, data);
