@@ -10,13 +10,12 @@ using Newtonsoft.Json;
 public static string AAD_TENANTID       = Environment.GetEnvironmentVariable("AAD_TENANTID");
 public static string CLIENT_ID          = Environment.GetEnvironmentVariable("CLIENT_ID");
 public static string CLIENT_SECRET      = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-public static string BASE_URI           = Environment.GetEnvironmentVariable("AUTHCODE_URI");
+public static string BASE_URI           = Environment.GetEnvironmentVariable("BASE_URI");
 public static string COMPANY_ID         = Environment.GetEnvironmentVariable("COMPANY_ID");
 
 public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 {
     HttpClient client = new HttpClient();
-
     switch(req.Method)
     {
         case "GET":
@@ -43,7 +42,6 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
                         case "FAILED":
                             responseStringMessage = "Authorization failed. Failed to retrieve access token. You can close this tab.";
                             break; 
-
                     }
                     return new OkObjectResult(responseStringMessage);
                 }
@@ -62,12 +60,9 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a POST request.");
             try{
-                string documentContents = "{\"key1\":\"value\"}";
-
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
                 string resp = await PostEventToBCAsync(JsonConvert.SerializeObject(new { inputJson = requestBody}), log);
-log.LogInformation(resp);
+                log.LogInformation(resp);
                 return new OkObjectResult(resp);
             }
             catch(Exception ex)
@@ -81,15 +76,13 @@ log.LogInformation(resp);
             return new BadRequestObjectResult($"HTTPMethod {req.Method} is not supported!"); 
         }
     }
-    
 }
-
 public static async Task<string> PostEventToBCAsync(string jsonBody, ILogger log)
 {
     HttpClient client = new HttpClient(); 
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {await GetBearerTokenAsync()}");
     var data = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-    string postUri = $"https://api.businesscentral.dynamics.com/v2.0/{AAD_TENANTID}/{ENVIRONMENT_NAME}/{EVENT_URI}";
+    string postUri = $"{BASE_URI}/SquareOAuthService_GetSquareWebhookRequest?company={COMPANY_ID}/";
     log.LogInformation(postUri);
     log.LogInformation(jsonBody);
     var response = await client.PostAsync(postUri, data);
@@ -101,40 +94,26 @@ public static async Task<string> PostAuthCodeToBCAsync(string jsonBody, ILogger 
     HttpClient client = new HttpClient(); 
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {await GetBearerTokenAsync()}");
     var data = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-    string postUri = $"https://api.businesscentral.dynamics.com/v2.0/{AAD_TENANTID}/{ENVIRONMENT_NAME}/{AUTHCODE_URI}";
+    string postUri = $"{BASE_URI}/SquareOAuthService_GetAuthorizationCode?company={COMPANY_ID}/";
     log.LogInformation(postUri);
     log.LogInformation(data.ReadAsStringAsync().Result);
     var response = await client.PostAsync(postUri, data);
     var responseString = await response.Content.ReadAsStringAsync();
     return responseString; 
 }
-
 public static async Task<string> GetBearerTokenAsync()
 {
     HttpClient client = new HttpClient();
-
-    client.DefaultRequestHeaders.Add("Authorization", $"Basic {EncodeTo64(CLIENT_ID + ":" + CLIENT_SECRET)}");
     var grantValues = new Dictionary<string, string>
     {
-        { "grant_type", "password" },
-        { "username", ADMIN_USERNAME },
-        { "password", ADMIN_PASSWORD },
-        { "resource", "https://api.businesscentral.dynamics.com/" }
+        { "grant_type", "client_credentials" },
+        { "client_id", CLIENT_ID },
+        { "client_secret", CLIENT_SECERT },
+        { "scope", "https://api.businesscentral.dynamics.com/.default" }
     };
-
     var grantContent = new FormUrlEncodedContent(grantValues); 
-
-    var response = await client.PostAsync($"https://login.windows.net/{AAD_TENANTID}/oauth2/token", grantContent);
-
+    var response = await client.PostAsync($"https://login.microsoftonline.com/{AAD_TENANTID}/oauth2/v2.0/token", grantContent);
     var responseString = await response.Content.ReadAsStringAsync();
     dynamic TokenData = JsonConvert.DeserializeObject(responseString);
-
     return TokenData != null ? TokenData?.access_token : "";
-}
-
-public static string EncodeTo64(string toEncode)
-{
-    byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
-    string returnValue = System.Convert.ToBase64String(toEncodeAsBytes);
-    return returnValue;
 }
